@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BrandController;
+use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\UserController;
 
 Route::prefix('v1')->group(function () {
@@ -25,8 +25,8 @@ Route::prefix('v1')->group(function () {
             Route::post('refresh', 'refresh');
     });
 
-    Route::controller(BrandController::class)
-        ->prefix('posts')
+    Route::controller(PublicationController::class)
+        ->prefix('publications')
         ->group(function () {
             //expec: find all
             Route::get('', 'index');
