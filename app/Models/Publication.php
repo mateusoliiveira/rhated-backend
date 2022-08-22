@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Category extends Model
+class Publication extends Model
 {
     use HasFactory, Uuid;
 
@@ -18,8 +17,8 @@ class Category extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'picture'
+        'user_id',
+        'body'
     ];
 
     protected function uuidVersion(): int
@@ -42,18 +41,13 @@ class Category extends Model
     public $incrementing = false;
 
     /**
-     * Get the cars of the Category
+     * Get the cars of the Publication
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
 
-    public function vehicles(): HasMany
+    public function publication(): BelongsTo
     {
-        return $this->hasMany(Vehicle::class);
-    }
-
-    public function offers(): BelongsTo
-    {
-        return $this->belongsTo(Offer::class, 'category_id', 'id');
+        return $this->belongsTo(User::class);
     }
 }

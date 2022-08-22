@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {
+        Schema::create('publications_ratings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name', 50)->unique();
-            $table->string('picture')->nullable();
+            $table->string('user_id');
+            $table->string('author_id');
+            $table->string('publication_id');
+            $table->decimal('rating', 8, 3);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('publications_ratings');
     }
 };

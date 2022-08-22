@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Contracts;
 
-interface BrandRepositoryInterface
+interface PublicationRepositoryInterface
 {
     public function get();
     public function where($table, $type, $q);
