@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
-use App\Repositories\Contracts\OfferRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
 class UserController extends Controller
@@ -13,12 +12,10 @@ class UserController extends Controller
     protected $request;
     public function __construct(
         UserRepositoryInterface $model,
-        OfferRepositoryInterface $modelOffer,
         UserRequest $request
         )
     {
         $this->model = $model;
-        $this->modelOffer = $modelOffer;
         $this->request = $request;
     }
 
