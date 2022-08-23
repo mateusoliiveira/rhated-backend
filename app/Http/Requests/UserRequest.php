@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
     {
       return $this->method() === 'POST' || $this->method() === 'PATCH' ? [
         'email' => 'required|string|email|min:10|max:50|unique:users,email',
-        'name' => 'required|string|max:50',
+        'fullname' => 'required|string|min:5|max:50',
         'password' => 'required|string|min:6|max:20',
       ] : [];
     }
