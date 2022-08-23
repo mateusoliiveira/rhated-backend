@@ -33,7 +33,7 @@ class AuthRequest extends FormRequest
         if (!$token)
         {
             return response()->json([
-                'message' => 'Senha incorreta'
+                'errors' => ['password' => 'Usuário ou senha incorreta']
             ], 401);
         }
         $user = $this->authedUser();
