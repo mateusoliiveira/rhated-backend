@@ -190,6 +190,7 @@ return [
         'contact' => 'celular',
         'password_confirmation' => 'confirmação da senha',
         'current_password' => 'senha atual',
+        'fullname' => 'nome'
     ],
 
 ];
