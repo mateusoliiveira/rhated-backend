@@ -47,7 +47,7 @@ class AuthRequest extends FormRequest
         $user = Auth::user();
         if(!$user) {
             return response()->json([
-                'message' => 'Unauthorized'
+                'errors' => 'Unauthorized'
             ], 401);
         }
         return $user;
