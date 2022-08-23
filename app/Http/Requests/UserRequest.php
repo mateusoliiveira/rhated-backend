@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
         'email' => 'required|string|email|min:10|max:50|unique:users,email',
         'fullname' => 'required|string|min:5|max:50',
         'password' => 'required|string|min:6|max:20',
-        'nickname' => 'required|string|min:3|max:12|unique:profiles,nickname',
+        'nickname' => 'required|string|min:3|max:12|unique:user_profiles,nickname',
       ] : [];
     }
 }
