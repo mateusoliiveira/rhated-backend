@@ -3,10 +3,10 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\Brand;
+use App\Models\Publication;
 use App\Repositories\Contracts\PublicationRepositoryInterface;
 
 class PublicationRepository extends AbstractRepository implements PublicationRepositoryInterface
 {
-    protected $model = Brand::class;
+    protected $model = Publication::class;
 }
