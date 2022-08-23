@@ -32,16 +32,16 @@ class AuthRequest extends FormRequest
           'email' => $this['email'],
           'password' => $this['password']
         ]);
-        try {
-          $user = $this->authedUser();
-          return response()->json([
-                'user' => $user,
-                'token' => $token
-          ]);
-        } catch (\Throwable $th) {
-          throw new JWTException('Usuário ou senha incorreta', 401, $th);
+        $user = Auth::user();
+        if(!$user) {
+            return response()->json([
+                'errors' => ['password' => 'Usuário ou senha incorreto']
+            ], 401);
         }
-
+        return response()->json([
+              'user' => $user,
+              'token' => $token
+        ]);
       } catch (JWTException $th) {
         throw new JWTException('Usuário ou senha incorreta', 401, $th);
       }
