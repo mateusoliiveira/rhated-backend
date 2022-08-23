@@ -41,15 +41,4 @@ class Profile extends Model
      * @var bool
      */
     public $incrementing = false;
-
-    /**
-     * Get the cars of the Publication
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-
-    public function profile(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

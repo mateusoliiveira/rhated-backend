@@ -39,15 +39,4 @@ class Publication extends Model
      * @var bool
      */
     public $incrementing = false;
-
-    /**
-     * Get the cars of the Publication
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-
-    public function publication(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

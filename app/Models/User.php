@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements JWTSubject
@@ -90,8 +90,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Profile::class);
     }
 
-    public function publications(): BelongsTo
+    public function publications(): HasMany
     {
-        return $this->belongsTo(Publication::class);
+        return $this->hasMany(Publication::class);
     }
 }

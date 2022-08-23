@@ -31,12 +31,13 @@ class UserController extends Controller
         ];
         $user = $this->model->create($userData);
 
-        $profileData = [
+        $userProfile = [
           "user_id" => $user->id,
-          "first_name" => explode(" ", $this->request->userHashed()["fullname"])[0],
+          "first_name" => explode(" ", $userData["fullname"])[0],
           "nickname" => $this->request->userHashed()["nickname"],
+          "biography" => 'Olá!'
         ];
-        $profile = $this->externalModelProfile->create($profileData);
+        $profile = $this->externalModelProfile->create($userProfile);
 
         return response()->json([
             'message' => 'Conta criada com sucesso, seja bem vindo!',
