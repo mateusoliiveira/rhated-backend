@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 
 class AuthRequest extends FormRequest
 {
@@ -26,21 +27,19 @@ class AuthRequest extends FormRequest
 
     public function authentication()
     {
+      try {
         $token = Auth::attempt([
-            'email' => $this['email'],
-            'password' => $this['password']
+          'email' => $this['email'],
+          'password' => $this['password']
         ]);
-        if (!$token)
-        {
-            return response()->json([
-                'errors' => ['password' => 'Usuário ou senha incorreta']
-            ], 401);
-        }
         $user = $this->authedUser();
-        return response()->json([
-            'user' => $user,
-            'token' => $token
+          return response()->json([
+              'user' => $user,
+              'token' => $token
         ]);
+      } catch (\Throwable $th) {
+        throw new JWTException('Usuário ou senha incorreta', 401, $th);
+      }
     }
 
     public function authedUser()
