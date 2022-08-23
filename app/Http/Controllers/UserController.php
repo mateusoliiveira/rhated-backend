@@ -33,6 +33,7 @@ class UserController extends Controller
 
         $profileData = [
           "user_id" => $user->id,
+          "first_name" => explode(" ", $this->request->userHashed()["fullname"])[0],
           "nickname" => $this->request->userHashed()["nickname"],
         ];
         $profile = $this->externalModelProfile->create($profileData);
