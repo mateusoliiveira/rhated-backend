@@ -27,7 +27,6 @@ class AuthRequest extends FormRequest
 
     public function authentication()
     {
-      try {
         $token = Auth::attempt([
           'email' => $this['email'],
           'password' => $this['password']
@@ -42,9 +41,6 @@ class AuthRequest extends FormRequest
               'user' => $user,
               'token' => $token
         ]);
-      } catch (JWTException $th) {
-        throw new JWTException('Usuário ou senha incorreta', 401, $th);
-      }
     }
 
     public function authedUser()
