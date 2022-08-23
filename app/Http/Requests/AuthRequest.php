@@ -33,11 +33,11 @@ class AuthRequest extends FormRequest
           'password' => $this['password']
         ]);
         $user = $this->authedUser();
-          return response()->json([
+        return response()->json([
               'user' => $user,
               'token' => $token
         ]);
-      } catch (\Throwable $th) {
+      } catch (JWTException $th) {
         throw new JWTException('Usuário ou senha incorreta', 401, $th);
       }
     }
