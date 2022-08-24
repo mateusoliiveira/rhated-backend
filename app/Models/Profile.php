@@ -43,6 +43,10 @@ class Profile extends Model
     public $incrementing = false;
 
     protected $casts = [
-      'id' => 'string'
+      'id' => 'string',
+      'user_id' => 'string',
+      'first_name' => 'string',
+      'nickname' => 'string',
+      'biography'=> 'string'
     ];
 }

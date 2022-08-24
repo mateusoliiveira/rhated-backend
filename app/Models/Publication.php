@@ -41,6 +41,8 @@ class Publication extends Model
     public $incrementing = false;
 
     protected $casts = [
-      'id' => 'string'
+      'id' => 'string',
+      'user_id' => 'string',
+      'body' => 'string',
     ];
 }
