@@ -21,20 +21,20 @@ class PublicationController extends Controller
 
     public function index()
     {
-       //return $this->model->get();
-    return DB::table("publications")
-    ->leftJoin("users", function($join){
-      $join->on("publications.user_id", "=", "users.id");
-    })
-    ->select("users.id", "publications.id", "publications.body", "publications.created_at")
-    ->where("publications.user_id", "=", $this->request->authedUser()['id'])
-    ->whereIn("publications.user_id", function($query){
-      $query->from("follows")
-      ->select("user_followed_id")
-      ->where("user_id", "=", $this->request->authedUser()['id']);
-    })
-    ->orderBy("publications.created_at","desc")
-    ->get();
+      //return $this->model->get();
+      return DB::table("publications")
+      ->leftJoin("users", function($join){
+        $join->on("publications.user_id", "=", "users.id");
+      })
+      ->select("users.id", "publications.id", "publications.body", "publications.created_at")
+      ->where("publications.user_id", "=", $this->request->authedUser()['id'])
+      ->whereIn("publications.user_id", function($query){
+        $query->from("follows")
+        ->select("user_followed_id")
+        ->where("user_id", "=", $this->request->authedUser()['id']);
+      })
+      ->orderBy("publications.created_at","desc")
+      ->get();
     }
 
     // public function indexWith()
