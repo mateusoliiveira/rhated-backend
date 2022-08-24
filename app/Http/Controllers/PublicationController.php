@@ -22,7 +22,10 @@ class PublicationController extends Controller
     public function index()
     {
       $user = $this->request->authedUser();
-      return $this->model->where('user_id', '=', $user->id)->get();
+      return $this->model
+        ->where('user_id', '=', $user->id)
+        ->with('users')
+        ->get();
     }
 
     public function store()
