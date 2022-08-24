@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('publications_ratings', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('user_id');
-            $table->string('author_id');
+            $table->string('user_rated_id');
             $table->string('publication_id');
             $table->decimal('rating', 8, 3);
             $table->timestamps();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publications_ratings');
+        Schema::dropIfExists('ratings');
     }
 };

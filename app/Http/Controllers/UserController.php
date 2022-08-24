@@ -27,13 +27,13 @@ class UserController extends Controller
         $userData = [
           "email" => $this->request->userHashed()["email"],
           "password" => $this->request->userHashed()["password"],
-          "fullname" => $this->request->userHashed()["fullname"],
+          "full_name" => $this->request->userHashed()["full_name"],
         ];
         $user = $this->model->create($userData);
 
         $userProfile = [
           "user_id" => $user->id,
-          "first_name" => explode(" ", $userData["fullname"])[0],
+          "first_name" => explode(" ", $userData["full_name"])[0],
           "nickname" => $this->request->userHashed()["nickname"],
           "biography" => 'Olá!'
         ];
