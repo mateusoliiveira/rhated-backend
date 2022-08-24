@@ -34,7 +34,7 @@ class PublicationController extends Controller
       $publication = $this->request->validated();
       $publicationData = [
               "user_id" => $user->id,
-              "body" => $publication->body
+              "body" => $publication["body"]
       ];
       return $this->model->create($publicationData);
     }
