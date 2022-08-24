@@ -39,4 +39,10 @@ class Follow extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    protected $casts = [
+      'id' => 'string',
+      'user_id' => 'string',
+      'user_followed_id' => 'string',
+    ];
 }

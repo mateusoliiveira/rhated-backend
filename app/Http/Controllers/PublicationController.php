@@ -21,26 +21,9 @@ class PublicationController extends Controller
 
     public function index()
     {
-      //return $this->model->get();
-      return DB::table("publications")
-      ->leftJoin("users", function($join){
-        $join->on("publications.user_id", "=", "users.id");
-      })
-      ->select("users.id", "publications.id", "publications.body", "publications.created_at")
-      ->where("publications.user_id", "=", $this->request->authedUser()['id'])
-      ->whereIn("publications.user_id", function($query){
-        $query->from("follows")
-        ->select("user_followed_id")
-        ->where("user_id", "=", $this->request->authedUser()['id']);
-      })
-      ->orderBy("publications.created_at","desc")
-      ->get();
+      $user = $this->request->authedUser();
+      return $this->model->where('publications', 'user_id', $user->id)->get();
     }
-
-    // public function indexWith()
-    // {
-    //    return $this->model->with('vehicles.brands')->get();
-    // }
 
     public function store()
     {
@@ -53,25 +36,10 @@ class PublicationController extends Controller
       return $this->model->create($publicationData);
     }
 
-    // public function insert()
-    // {
-    //    return $this->model->insert((array_map(fn($request): array => [
-    //      "id" => UuidV4::uuid4(),
-    //      "created_at" => now(),
-    //      "updated_at" => now(),
-    //      ...$request
-    //    ], $this->request->all())));
-    // }
-
     public function show($id)
     {
        return $this->model->show($id);
     }
-
-    // public function with($id)
-    // {
-    //    return $this->model->with('vehicles')->find($id);
-    // }
 
     public function destroy($id)
     {

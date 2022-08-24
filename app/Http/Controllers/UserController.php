@@ -22,6 +22,12 @@ class UserController extends Controller
         $this->request = $request;
     }
 
+
+    public function show($id)
+    {
+       return $this->model->with('users.profiles')->find($id);
+    }
+
     public function store()
     {
         $userData = [

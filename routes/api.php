@@ -8,8 +8,8 @@ use App\Http\Controllers\UserController;
 
 Route::prefix('v1')->group(function () {
     Route::controller(AuthController::class)
-        ->prefix('guests')
-        ->group(function () {
+      ->prefix('guests')
+      ->group(function () {
             Route::post('login', 'login');
             Route::controller(UserController::class)
                 ->group(function () {
@@ -17,16 +17,21 @@ Route::prefix('v1')->group(function () {
             });
     });
 
-    Route::controller(AuthController::class)
+    Route::middleware('auth:api')
+      ->group(function () {
+      Route::controller(AuthController::class)
         ->prefix('users')
-        ->middleware('auth:api')
         ->group(function () {
             Route::get('me', 'me');
             Route::post('logout', 'logout');
             Route::post('refresh', 'refresh');
-    });
-
-    Route::controller(PublicationController::class)
+      });
+      Route::controller(UserController::class)
+        ->prefix('users')
+        ->group(function () {
+            Route::get('{id}', 'show');
+      });
+      Route::controller(PublicationController::class)
         ->prefix('publications')
         ->group(function () {
             //expec: find all
@@ -37,15 +42,14 @@ Route::prefix('v1')->group(function () {
             Route::post('', 'store');
             //expec: delete one
             Route::delete('{id}', 'destroy');
-    });
-
-    Route::controller(FollowController::class)
+      });
+      Route::controller(FollowController::class)
         ->prefix('follows')
         ->group(function () {
             //expec: store one
             Route::post('', 'store');
             //expec: delete one
             Route::delete('{id}', 'destroy');
+      });
     });
-});
-
+  });

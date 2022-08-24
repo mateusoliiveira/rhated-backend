@@ -25,7 +25,7 @@ class FollowRequest extends FormRequest
     public function rules()
     {
       return $this->method() === 'POST' || $this->method() === 'PATCH' ? [
-        'user_followed_id' => 'required|string|exists:users,id',
+        'user_followed_id' => 'required|string|exists:users,id|unique:follows,user_followed_id',
       ] : [];
     }
 

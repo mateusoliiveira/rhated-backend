@@ -62,6 +62,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<string, string>
      */
     protected $casts = [
+        'id' => 'string',
         'email_verified_at' => 'datetime',
     ];
 
@@ -85,4 +86,11 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function profile(): HasOne {
+      return $this->hasOne(Profile::class);
+    }
+
+    public function publications(): HasMany {
+      return $this->hasMany(Publication::class);
+    }
 }
