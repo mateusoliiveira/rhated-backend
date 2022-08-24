@@ -32,10 +32,10 @@ class PublicationController extends Controller
     {
       $user = $this->request->authedUser();
       $publication = $this->request->validated();
-      $publicationData = (array_map(fn($publication): array => [
+      $publicationData = [
               "user_id" => $user->id,
-              ...$publication
-            ], $publication));
+              "body" => $publication->body
+      ];
       return $this->model->create($publicationData);
     }
 
