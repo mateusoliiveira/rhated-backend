@@ -25,7 +25,7 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
       return $this->method() === 'POST' || $this->method() === 'PATCH' ? [
-        'nickname' => 'required|string|min:3|max:12|unique:profiles,nickname',
+        'nickname' => 'required|string|min:3|max:12|unique:users_profiles,nickname',
         'biography' => 'string|min:0|max:50',
       ] : [];
     }
