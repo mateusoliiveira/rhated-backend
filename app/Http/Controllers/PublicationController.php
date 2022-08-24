@@ -24,7 +24,7 @@ class PublicationController extends Controller
       $user = $this->request->authedUser();
       return $this->model
         ->where('user_id', '=', $user->id)
-        ->with('publications.users')
+        ->with('users')
         ->get();
     }
 
