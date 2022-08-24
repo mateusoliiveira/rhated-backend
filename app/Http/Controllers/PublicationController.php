@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\PublicationRequest;
 use App\Repositories\Contracts\PublicationRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Rfc4122\UuidV4;
 
 class PublicationController extends Controller
@@ -20,7 +21,20 @@ class PublicationController extends Controller
 
     public function index()
     {
-       return $this->model->get();
+       //return $this->model->get();
+      return DB::table("publications")
+      ->leftJoin("users", function($join){
+        $join->on("publications.user_id", "=", "users.id");
+      })
+      ->select("users.id", "publications.id", "publications.body", "publications.created_at")
+      ->where("publications.user_id", "=", $this->request->authedUser()['id'])
+      ->whereIn("publications.user_id", function($query){
+        $query->from("users_followings")
+        ->select("user_followed")
+        ->where("user_id", "=", $this->request->authedUser()['id']);
+      })
+      ->orderBy("publications.created_at","desc")
+      ->get();
     }
 
     // public function indexWith()
