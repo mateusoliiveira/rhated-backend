@@ -96,6 +96,6 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function users(): BelongsTo {
-      return $this->belongsTo(Publication::class, 'id', 'user_id');
+      return $this->belongsTo(Publication::class, 'user_id', 'id');
     }
 }
