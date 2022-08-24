@@ -25,8 +25,7 @@ class PublicationRequest extends FormRequest
     public function rules()
     {
       return $this->method() === 'POST' || $this->method() === 'PATCH' ? [
-        'user_id' => 'required|string|exists:user,id',
-        'body' => 'required|string|max:150|min:1',
+        'body' => 'required|string|min:1|max:200',
       ] : [];
     }
 

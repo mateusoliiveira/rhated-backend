@@ -30,7 +30,13 @@ class PublicationController extends Controller
 
     public function store()
     {
-       return $this->model->create($this->request->validated());
+      $user = $this->request->authedUser();
+      $publication = $this->request->validated();
+      $publicationData = (array_map(fn($publication): array => [
+              "user_id" => $user->id,
+              ...$publication
+            ], $publication));
+      return $this->model->create($publicationData);
     }
 
     // public function insert()
