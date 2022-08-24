@@ -94,8 +94,4 @@ class User extends Authenticatable implements JWTSubject
     public function publications(): HasMany {
       return $this->hasMany(Publication::class);
     }
-
-    public function users(): BelongsTo {
-      return $this->belongsTo(Publication::class, 'user_id', 'id');
-    }
 }

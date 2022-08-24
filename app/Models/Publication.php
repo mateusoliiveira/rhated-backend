@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Publication extends Model
 {
@@ -45,4 +46,8 @@ class Publication extends Model
       'user_id' => 'string',
       'body' => 'string',
     ];
+
+    public function users(): HasOne {
+      return $this->hasOne(User::class);
+    }
 }
