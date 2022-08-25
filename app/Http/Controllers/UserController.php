@@ -26,8 +26,8 @@ class UserController extends Controller
     {
       $user = $this->request->authedUser();
        return $this->model
-        ->with('users.profiles')
-        ->with('users.publications')
+        ->with('profiles')
+        ->with('publications')
         ->find($user->id);
     }
 
