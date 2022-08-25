@@ -12,5 +12,4 @@ interface UserRepositoryInterface
     public function show($id);
     public function with($table);
     public function has($table);
-
 }

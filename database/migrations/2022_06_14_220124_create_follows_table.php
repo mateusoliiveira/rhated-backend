@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('follows', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->string('id')->primary();
             $table->string('user_id');
             $table->string('user_followed_id');
             $table->timestamps();

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('publications', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->string('id')->primary();
             $table->string('user_id');
             $table->string('body', 200);
             $table->timestamps();

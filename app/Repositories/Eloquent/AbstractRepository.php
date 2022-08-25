@@ -53,6 +53,31 @@ abstract class AbstractRepository
         return $this->model->has($table);
     }
 
+    public function leftJoin($table, $in, $signal, $out)
+    {
+        return $this->model->leftJoin($table, $in, $signal, $out);
+    }
+
+    public function select($data)
+    {
+        return $this->model->select($data);
+    }
+
+    public function whereIn($row, $data)
+    {
+        return $this->model->whereIn($row, $data);
+    }
+
+    public function orWhereIn($in, $values)
+    {
+        return $this->model->whereIn($in, $values);
+    }
+
+    public function latest()
+    {
+        return $this->model->latest();
+    }
+
     protected function resolveModel()
     {
         return app($this->model);

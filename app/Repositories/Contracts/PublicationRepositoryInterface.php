@@ -12,5 +12,10 @@ interface PublicationRepositoryInterface
     public function show($id);
     public function with($table);
     public function has($table);
+    public function whereIn($row, $data);
+    public function leftJoin($table, $in, $signal, $out);
+    public function select($data);
+    public function orWhereIn($in, $values);
+    public function latest();
 
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Publication extends Model
@@ -46,4 +48,9 @@ class Publication extends Model
       'user_id' => 'string',
       'body' => 'string',
     ];
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->using(RoleUser::class);
+    }
 }

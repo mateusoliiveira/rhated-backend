@@ -25,17 +25,17 @@ class UserController extends Controller
     public function index()
     {
       $user = $this->request->authedUser();
-       return $this->model
-        ->with('profiles')
+      return $this->model
+        ->with('profile')
         ->with('publications')
         ->find($user->id);
     }
 
     public function show($id)
     {
-       return $this->model
-        ->with('users.profiles')
-        ->with('users.publications')
+      return $this->model
+        ->with('profile')
+        ->with('publications')
         ->find($id);
     }
 

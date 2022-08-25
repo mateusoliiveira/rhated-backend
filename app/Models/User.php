@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -54,7 +55,8 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
-        'email_verified_at'
+        'email_verified_at',
+        'role'
     ];
 
     /**
@@ -87,11 +89,26 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function profile(): HasOne {
-      return $this->hasOne(Profile::class);
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
     }
 
-    public function publications(): HasMany {
-      return $this->hasMany(Publication::class);
+    public function publications(): HasMany
+    {
+        return $this->hasMany(Publication::class);
     }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(Publication::class);
+    }
+
+    // public function follow(): BelongsToMany {
+    //   return $this->belongsToMany(
+    //     'User',
+    //     'Follow',
+    //     'user_followed_id',
+    //     'user_id');
+    // }
 }
