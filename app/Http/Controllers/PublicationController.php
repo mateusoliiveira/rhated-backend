@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PublicationRequest;
 use App\Repositories\Contracts\FollowRepositoryInterface;
 use App\Repositories\Contracts\PublicationRepositoryInterface;
-use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Rfc4122\UuidV4;
 
 class PublicationController extends Controller
 {
