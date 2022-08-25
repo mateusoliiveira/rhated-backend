@@ -46,8 +46,4 @@ class Publication extends Model
       'user_id' => 'string',
       'body' => 'string',
     ];
-
-    public function users(): HasOne {
-      return $this->hasOne(User::class);
-    }
 }

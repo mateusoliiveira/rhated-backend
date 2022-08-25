@@ -22,10 +22,21 @@ class UserController extends Controller
         $this->request = $request;
     }
 
+    public function index()
+    {
+      $user = $this->request->authedUser();
+       return $this->model
+        ->with('users.profiles')
+        ->with('users.publications')
+        ->find($user->id);
+    }
 
     public function show($id)
     {
-       return $this->model->with('users.profiles')->find($id);
+       return $this->model
+        ->with('users.profiles')
+        ->with('users.publications')
+        ->find($id);
     }
 
     public function store()

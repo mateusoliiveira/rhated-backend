@@ -24,8 +24,13 @@ class PublicationController extends Controller
       $user = $this->request->authedUser();
       return $this->model
         ->where('user_id', '=', $user->id)
-        ->with('users')
         ->get();
+    }
+
+
+    public function show($id)
+    {
+       return $this->model->show($id);
     }
 
     public function store()
@@ -37,11 +42,6 @@ class PublicationController extends Controller
               "body" => $publication["body"]
       ];
       return $this->model->create($publicationData);
-    }
-
-    public function show($id)
-    {
-       return $this->model->show($id);
     }
 
     public function destroy($id)
