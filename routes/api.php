@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
       Route::controller(UserController::class)
         ->prefix('users')
         ->group(function () {
+            Route::get('', 'index');
             Route::get('{id}', 'show');
       });
       Route::controller(PublicationController::class)
