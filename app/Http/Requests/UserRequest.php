@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserRequest extends FormRequest
 {
@@ -31,5 +32,16 @@ class UserRequest extends FormRequest
         'password' => 'required|string|min:6|max:20',
         'nickname' => 'required|string|min:3|max:12|unique:profiles,nickname',
       ] : [];
+    }
+
+    public function authedUser()
+    {
+        $user = Auth::user();
+        if(!$user) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+        return $user;
     }
 }
