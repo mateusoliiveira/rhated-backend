@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Repositories\Contracts\ProfileRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -40,17 +41,21 @@ class UserController extends Controller
         ->with('following')
         ->with('publications.profile')
         ->withCount('publications')
+        ->count()
         ->find($id);
     }
     public function showByNicknameOrName($param)
     {
       return $this->model
       ->leftJoin("profiles", "profiles.user_id", "=", "users.id")
+      ->leftJoin("follows", "follows.user_id", "=", "users.id")
+      ->select(DB::raw('count(*) user_followed_id'))
       ->select(
         "users.id",
         "users.full_name",
         "profiles.nickname",
-        "profiles.biography"
+        "profiles.biography",
+        "follows.user_followed_id"
       )
         ->where('full_name','ILIKE',"%{$param}%")
         ->orWhere('profiles.nickname','ILIKE',"%{$param}")

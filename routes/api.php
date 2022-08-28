@@ -19,6 +19,12 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:api')
       ->group(function () {
+      Route::controller(FollowController::class)
+        ->prefix('follows')
+        ->group(function () {
+            //expec: store one
+            Route::post('', 'index');
+      });
       Route::controller(AuthController::class)
         ->prefix('users')
         ->group(function () {
@@ -45,13 +51,6 @@ Route::prefix('v1')->group(function () {
             //expec: delete one
             Route::delete('{id}', 'destroy');
       });
-      Route::controller(FollowController::class)
-        ->prefix('follows')
-        ->group(function () {
-            //expec: store one
-            Route::post('', 'store');
-            //expec: delete one
-            Route::delete('{id}', 'destroy');
-      });
+
     });
   });

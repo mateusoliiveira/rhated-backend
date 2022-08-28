@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\FollowRequest;
 use App\Repositories\Contracts\FollowRepositoryInterface;
-use Ramsey\Uuid\Rfc4122\UuidV4;
+
+use function PHPUnit\Framework\isNull;
 
 class FollowController extends Controller
 {
@@ -18,19 +19,24 @@ class FollowController extends Controller
         $this->request = $request;
     }
 
-    public function store()
+    public function index()
     {
       $user = $this->request->authedUser();
-      $toFollow = $this->request->validated();
+      $toFollow = $this->request->all();
       $followData = [
         "user_id" => $user->id,
         "user_followed_id" => $toFollow["user_followed_id"]
       ];
-       return $this->model->create($followData);
-    }
 
-    public function destroy($id)
-    {
-       return $this->model->delete($id);
+      $checkIfAlreadyFollow = $this->model
+      ->where('user_id', '=', $followData["user_id"])
+      ->where('user_followed_id', '=', $followData["user_followed_id"])
+      ->get();
+
+      if(count($checkIfAlreadyFollow) === 0) {
+        return $this->model->create($followData);
+      } else {
+        return $this->model->delete($checkIfAlreadyFollow);
+      }
     }
 }
