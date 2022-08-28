@@ -49,8 +49,7 @@ class Publication extends Model
       'body' => 'string',
     ];
 
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class)->using(RoleUser::class);
+    public function profile(): HasOne {
+    return $this->hasOne(Profile::class, 'user_id', 'user_id');
     }
 }

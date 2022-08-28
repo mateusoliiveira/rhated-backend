@@ -27,7 +27,9 @@ class UserController extends Controller
       $user = $this->request->authedUser();
       return $this->model
         ->with('profile')
-        ->with('publications')
+        ->with('following')
+        ->with('publications.profile')
+        ->withCount('publications')
         ->find($user->id);
     }
 
@@ -35,8 +37,24 @@ class UserController extends Controller
     {
       return $this->model
         ->with('profile')
-        ->with('publications')
+        ->with('following')
+        ->with('publications.profile')
+        ->withCount('publications')
         ->find($id);
+    }
+    public function showByNicknameOrName($param)
+    {
+      return $this->model
+      ->leftJoin("profiles", "profiles.user_id", "=", "users.id")
+      ->select(
+        "users.id",
+        "users.full_name",
+        "profiles.nickname",
+        "profiles.biography"
+      )
+        ->where('full_name','ILIKE',"%{$param}%")
+        ->orWhere('profiles.nickname','ILIKE',"%{$param}")
+      ->get();
     }
 
     public function store()

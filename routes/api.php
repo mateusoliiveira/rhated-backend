@@ -31,6 +31,7 @@ Route::prefix('v1')->group(function () {
         ->group(function () {
             Route::get('', 'index');
             Route::get('{id}', 'show');
+            Route::get('search/{param}', 'showByNicknameOrName');
       });
       Route::controller(PublicationController::class)
         ->prefix('publications')

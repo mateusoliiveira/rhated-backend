@@ -73,6 +73,21 @@ abstract class AbstractRepository
         return $this->model->whereIn($in, $values);
     }
 
+    public function whereBelongsTo($table)
+    {
+        return $this->model->whereBelongsTo($table);
+    }
+
+    public function join($table, $func = null)
+    {
+        return $this->model->join($table, $func);
+    }
+
+    public function whereLike($row, $q)
+    {
+        return $this->model->whereLike($row, $q);
+    }
+
     public function latest()
     {
         return $this->model->latest();
