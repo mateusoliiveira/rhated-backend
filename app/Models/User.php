@@ -8,8 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -66,6 +64,9 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'id' => 'string',
+        'email' => 'string',
+        'full_name' => 'string',
+        'password' => 'string',
         'email_verified_at' => 'datetime',
     ];
 

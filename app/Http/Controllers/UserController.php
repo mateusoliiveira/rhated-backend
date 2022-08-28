@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Repositories\Contracts\FollowRepositoryInterface;
 use App\Repositories\Contracts\ProfileRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Support\Facades\DB;
@@ -15,11 +16,13 @@ class UserController extends Controller
     public function __construct(
       UserRepositoryInterface $model,
       ProfileRepositoryInterface $externalModelProfile,
+      FollowRepositoryInterface $externalModelFollow,
       UserRequest $request
         )
     {
         $this->model = $model;
         $this->externalModelProfile = $externalModelProfile;
+        $this->externalModelFollow = $externalModelFollow;
         $this->request = $request;
     }
 
@@ -28,35 +31,46 @@ class UserController extends Controller
       $user = $this->request->authedUser();
       return $this->model
         ->with('profile')
-        ->with('following')
         ->with('publications.profile')
-        ->withCount('publications')
         ->find($user->id);
     }
 
     public function show($id)
     {
+      $user = $this->request->authedUser();
+      $usersThatAuthedUserFollow = $this->externalModelFollow
+      ->where("user_id", "=", $user->id)
+      ->select("user_followed_id")
+      ->get();
+
       return $this->model
+      ->leftJoin("follows", "follows.user_id", "=", "users.id")
+      ->whereIn("follows.user_followed_id", $usersThatAuthedUserFollow)
+      ->select(
+        "users.id",
+        "users.full_name",
+        "users.created_at",
+        "follows.id as check_follow",
+        "follows.created_at as following_since",
+        )
         ->with('profile')
         ->with('following')
         ->with('publications.profile')
-        ->withCount('publications')
-        ->count()
-        ->find($id);
+      ->find($id);
     }
+
     public function showByNicknameOrName($param)
     {
       return $this->model
       ->leftJoin("profiles", "profiles.user_id", "=", "users.id")
       ->leftJoin("follows", "follows.user_id", "=", "users.id")
-      ->select(DB::raw('count(*) user_followed_id'))
       ->select(
         "users.id",
         "users.full_name",
+        "users.created_at",
         "profiles.nickname",
         "profiles.biography",
-        "follows.user_followed_id"
-      )
+        )
         ->where('full_name','ILIKE',"%{$param}%")
         ->orWhere('profiles.nickname','ILIKE',"%{$param}")
       ->get();

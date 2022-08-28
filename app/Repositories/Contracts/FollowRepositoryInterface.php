@@ -18,4 +18,5 @@ interface FollowRepositoryInterface
   public function select($data);
   public function orWhereIn($in, $values);
   public function latest();
+  public function withCount($table);
 }

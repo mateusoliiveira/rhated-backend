@@ -47,8 +47,8 @@ class Follow extends Model
       'user_followed_id' => 'string',
     ];
 
-    public function user(): BelongsTo
-    {
-      return $this->belongsTo(User::class, 'user_followed_id');
-    }
+    // public function user(): BelongsTo
+    // {
+    //   return $this->belongsTo(User::class, 'user_followed_id');
+    // }
 }

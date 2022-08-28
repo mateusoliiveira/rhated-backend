@@ -20,5 +20,5 @@ interface UserRepositoryInterface
     public function latest();
     public function join($table, $func);
     public function whereLike($row, $q);
-
-}
+    public function withCount($table);
+  }

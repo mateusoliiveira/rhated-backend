@@ -88,6 +88,11 @@ abstract class AbstractRepository
         return $this->model->whereLike($row, $q);
     }
 
+    public function withCount($table)
+    {
+        return $this->model->withCount($table);
+    }
+
     public function latest()
     {
         return $this->model->latest();
