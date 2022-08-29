@@ -21,4 +21,6 @@ interface UserRepositoryInterface
     public function join($table, $func);
     public function whereLike($row, $q);
     public function withCount($table);
+    public function on($origin, $type, $out);
+
   }

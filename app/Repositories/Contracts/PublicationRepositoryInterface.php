@@ -14,6 +14,7 @@ interface PublicationRepositoryInterface
   public function has($table);
   public function whereBelongsTo($table);
   public function whereIn($row, $data);
+  public function on($origin, $type, $out);
   public function leftJoin($table, $in, $signal, $out);
   public function select($data);
   public function orWhereIn($in, $values);

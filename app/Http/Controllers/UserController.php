@@ -37,26 +37,32 @@ class UserController extends Controller
 
     public function show($id)
     {
-      $user = $this->request->authedUser();
-      $usersThatAuthedUserFollow = $this->externalModelFollow
-      ->where("user_id", "=", $user->id)
-      ->select("user_followed_id")
+      $authedUser = $this->request->authedUser();
+
+      $checkIfFollow = $this->externalModelFollow
+      ->where("user_id", "=", $authedUser->id)
+      ->where("user_followed_id", "=", $id)
+      ->select('id')
       ->get();
 
-      return $this->model
-      ->leftJoin("follows", "follows.user_id", "=", "users.id")
-      ->whereIn("follows.user_followed_id", $usersThatAuthedUserFollow)
-      ->select(
-        "users.id",
-        "users.full_name",
-        "users.created_at",
-        "follows.id as check_follow",
-        "follows.created_at as following_since",
+      if(count($checkIfFollow)) {
+        return $this->model
+        ->leftJoin("follows", "follows.user_followed_id", "=", "users.id")
+        ->whereIn("follows.id", $checkIfFollow)
+        ->select(
+          "users.*",
+          "follows.id as check_follow",
+          "follows.created_at as following_since",
         )
         ->with('profile')
-        ->with('following')
         ->with('publications.profile')
-      ->find($id);
+        ->find($id);
+      } else {
+        return $this->model
+        ->with('profile')
+        ->with('publications.profile')
+        ->find($id);
+      }
     }
 
     public function showByNicknameOrName($param)
@@ -70,6 +76,8 @@ class UserController extends Controller
         "users.created_at",
         "profiles.nickname",
         "profiles.biography",
+        "follows.id as check_follow",
+        "follows.created_at as following_since",
         )
         ->where('full_name','ILIKE',"%{$param}%")
         ->orWhere('profiles.nickname','ILIKE',"%{$param}")

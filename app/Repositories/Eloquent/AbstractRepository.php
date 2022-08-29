@@ -83,6 +83,11 @@ abstract class AbstractRepository
         return $this->model->join($table, $func);
     }
 
+    public function on($origin, $type, $out)
+    {
+        return $this->model->on($origin, $type, $out);
+    }
+
     public function whereLike($row, $q)
     {
         return $this->model->whereLike($row, $q);
