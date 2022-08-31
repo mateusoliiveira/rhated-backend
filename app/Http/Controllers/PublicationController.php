@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PublicationRequest;
 use App\Repositories\Contracts\FollowRepositoryInterface;
 use App\Repositories\Contracts\PublicationRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class PublicationController extends Controller
 {
@@ -30,18 +31,23 @@ class PublicationController extends Controller
       ->get();
 
       return $this->model
-      ->leftJoin("users", "publications.user_id", "=", "users.id")
-      ->leftJoin("profiles", "publications.user_id", "=", "profiles.user_id")
-      ->select(
-        "publications.id",
-        "profiles.nickname",
-        "profiles.user_id",
-        "publications.body",
-        "publications.created_at")
-      ->where("publications.user_id", "=", $authedUser->id)
-      ->orWhereIn("publications.user_id", $usersThatAuthedUserFollow)
-      ->latest()
-      ->get();
+        ->leftJoin("users", "publications.user_id", "=", "users.id")
+        ->leftJoin("profiles", "profiles.user_id", "=", "publications.user_id")
+        ->groupBy('profiles.id')
+        ->leftJoin('ratings', 'ratings.publication_id', '=', 'publications.id')
+        ->groupBy('publications.id')
+        ->select(
+          "publications.id",
+          "publications.user_id",
+          "publications.body",
+          "publications.created_at",
+          "profiles.nickname",
+          DB::raw('avg(ratings.rating) AS avg_rating')
+          )
+        ->where("publications.user_id", "=", $authedUser->id)
+        ->orWhereIn("publications.user_id", $usersThatAuthedUserFollow)
+        ->latest('publications.created_at')
+        ->get();
     }
 
     public function show($id)
