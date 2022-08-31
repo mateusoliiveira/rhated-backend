@@ -46,6 +46,6 @@ class Rating extends Model
       'user_id' => 'string',
       'user_rated_id' => 'string',
       'publication_id' => 'string',
-      'rating' => 'number',
+      'rating' => 'string',
     ];
 }
