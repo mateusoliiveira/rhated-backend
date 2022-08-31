@@ -31,8 +31,8 @@ class RatingController extends Controller
       ->get();
 
       if(count($checkIfAuthedAlreadyRatedThisPost) > 0) return response()->json([
-        'message' => 'Postagem já curtida'
-      ], 401);;
+        'errors' => ['rating' => 'Você já avaliou essa postagem']
+    ], 401);
 
       $publication = $this->externalModelPublication->show($rating["publication_id"]);
       $ratingData = [
