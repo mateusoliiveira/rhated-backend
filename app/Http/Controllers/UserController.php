@@ -45,7 +45,7 @@ class UserController extends Controller
       ->select('id')
       ->get();
 
-      if(count($checkIfFollow)) {
+      if(count($checkIfFollow) && $authedUser->id !== $id) {
         return $this->model
         ->leftJoin("follows", "follows.user_followed_id", "=", "users.id")
         ->whereIn("follows.id", $checkIfFollow)
@@ -71,9 +71,7 @@ class UserController extends Controller
       ->leftJoin("profiles", "profiles.user_id", "=", "users.id")
       ->leftJoin("follows", "follows.user_id", "=", "users.id")
       ->select(
-        "users.id",
-        "users.full_name",
-        "users.created_at",
+        "users.*",
         "profiles.nickname",
         "profiles.biography",
         "follows.id as check_follow",

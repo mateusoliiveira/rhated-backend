@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
           'App\Repositories\Contracts\FollowRepositoryInterface',
           'App\Repositories\Eloquent\FollowRepository',
       );
+        $this->app->bind(
+          'App\Repositories\Contracts\RatingRepositoryInterface',
+          'App\Repositories\Eloquent\RatingRepository',
+      );
     }
 
     /**

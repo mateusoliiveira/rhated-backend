@@ -5,13 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Publication extends Model
+class Rating extends Model
 {
     use HasFactory, Uuid;
 
@@ -22,7 +17,9 @@ class Publication extends Model
      */
     protected $fillable = [
         'user_id',
-        'body'
+        'user_rated_id',
+        'publication_id',
+        'rating'
     ];
 
     protected function uuidVersion(): int
@@ -47,14 +44,8 @@ class Publication extends Model
     protected $casts = [
       'id' => 'string',
       'user_id' => 'string',
-      'body' => 'string',
+      'user_rated_id' => 'string',
+      'publication_id' => 'string',
+      'rating' => 'number',
     ];
-
-    public function profile(): HasOne {
-    return $this->hasOne(Profile::class, 'user_id', 'user_id');
-    }
-
-    public function ratings(): HasMany {
-      return $this->hasMany(Rating::class, 'publication_id', 'id');
-      }
 }

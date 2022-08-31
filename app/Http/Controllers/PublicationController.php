@@ -46,7 +46,7 @@ class PublicationController extends Controller
 
     public function show($id)
     {
-       return $this->model->show($id);
+       return $this->model->with('profile')->with('ratings')->find($id);
     }
 
     public function store()
