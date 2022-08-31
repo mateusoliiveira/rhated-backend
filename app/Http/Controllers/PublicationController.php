@@ -42,7 +42,8 @@ class PublicationController extends Controller
           "publications.body",
           "publications.created_at",
           "profiles.nickname",
-          DB::raw('avg(ratings.rating) AS avg_rating')
+          DB::raw('avg(ratings.rating) AS average_rating'),
+          DB::raw('count(ratings.id) AS total_ratings')
           )
         ->where("publications.user_id", "=", $authedUser->id)
         ->orWhereIn("publications.user_id", $usersThatAuthedUserFollow)

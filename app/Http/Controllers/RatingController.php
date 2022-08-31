@@ -30,8 +30,6 @@ class RatingController extends Controller
       ->where("publication_id", '=', $rating["publication_id"])
       ->get();
 
-      //return $checkIfAuthedAlreadyRatedThisPost;
-
       if(count($checkIfAuthedAlreadyRatedThisPost) > 0) return response()->json([
         'message' => 'Postagem já curtida'
       ], 401);;
