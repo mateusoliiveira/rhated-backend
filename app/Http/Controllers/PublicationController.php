@@ -45,8 +45,8 @@ class PublicationController extends Controller
             "profiles.nickname",
             DB::raw('avg(ratings.rating) AS average_rating'),
             DB::raw('count(ratings.id) AS total_ratings'),
-            DB::raw('(select ratings.rating from ratings where user_id = publications.user_id and publication_id = publications.id group by ratings.id) as rated'))
-      ->from("publications")
+            DB::raw("(select ratings.rating from ratings where user_id = '$authedUser->id'::text and publication_id = publications.id group by ratings.id) as my_rating"))
+            ->from("publications")
       ->where("publications.user_id", "=", $authedUser->id)
       ->orWhereIn("publications.user_id", $usersThatAuthedUserFollow)
       ->latest("publications.created_at")
